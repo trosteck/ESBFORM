@@ -1,0 +1,17 @@
+
+
+#page-content-container {
+    padding: 0;
+}
+
+.submission-details-header {
+    margin-top: 20px;
+}
+
+.submission-display-row {
+    margin-bottom: 0;
+}
+
+.badge.info-badge {
+    display: none;
+}

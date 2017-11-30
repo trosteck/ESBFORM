@@ -1,0 +1,127 @@
+
+
+
+
+
+
+/************************************************/
+/* Progress bar  			*/
+
+.drs-progress-icons-sprite {
+	background-image: url('../images/Progressv3.png');
+	background-size: 500px;
+	background-repeat: no-repeat;	
+}
+
+.sidebar { 
+	text-align:center; 
+	padding: 0px;
+	padding-bottom: 5px; 
+	border-bottom: solid 1px #eaeaea; 
+	margin-bottom: 15px; 
+}
+
+.sidebar h1 { display:none; }
+.sidebar-step-text {  display:none; }
+.active { cursor: pointer; }
+
+.drs-icon-progress { 
+	width: 35px;
+	height: 30px;	
+}
+
+.ptop { padding-top: 5px; }
+
+.sidebar-step { display:inline-block; }
+
+
+
+@media (min-width: 992px) {
+	
+	.drs-icon-progress { /* Adds line */
+		width: 40px;
+		height: 46px;	
+	}	
+	.drs-icon-last-item {
+		height: 30px;
+	}
+
+	.sidebar-step { display:table; }
+	
+	.sidebar-step-text {
+		display: table-cell;
+		vertical-align: top;
+		text-align:left;
+		font-family: 'Century Gothic';
+		color: #808080;
+	}	
+	.current .sidebar-step-text { color: #e3992b; font-weight:bold;}
+	.active  .sidebar-step-text {  text-decoration:underline; }
+	.active  .sidebar-step-text:hover { color: #333; }
+	
+		
+	.sidebar {
+		/*position: fixed;
+		top: 51px;
+		bottom: 0; 
+		left: 0;
+		z-index: 997;
+		display: block;*/
+		padding: 20px;
+		overflow-x: hidden;
+		overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+		border-right: 1px solid #26BDEF;
+		border-color: #ffffff;/**/
+		text-align:left;
+	}
+	.sidebar h1 {
+		margin: 0;
+		font-size: 1.1em;
+		padding-bottom: 10px;
+		display:block;
+	}
+	
+}
+
+/* icons */
+.sidebar-step1 .drs-icon-current  { background-position: 0px 0px; }
+.sidebar-step2 .drs-icon-current  { background-position: -50px 0px; } 
+.sidebar-step3 .drs-icon-current  { background-position: -100px 0px; }
+.sidebar-step4 .drs-icon-current  { background-position: -150px 0px; }
+.sidebar-step5 .drs-icon-current  { background-position: -200px 0px; }
+.sidebar-step6 .drs-icon-current  { background-position: -250px 0px; }
+.sidebar-step7 .drs-icon-current  { background-position: -300px 0px; }
+.sidebar-step8 .drs-icon-current  { background-position: -350px 0px; }
+.sidebar-step9 .drs-icon-current  { background-position: -400px 0px; }
+
+.sidebar-step1 .drs-icon-default { background-position: 0px -50px!important; }
+.sidebar-step2 .drs-icon-default { background-position: -50px -50px!important; }
+.sidebar-step3 .drs-icon-default { background-position: -100px -50px!important; }
+.sidebar-step4 .drs-icon-default { background-position: -150px -50px!important; }
+.sidebar-step5 .drs-icon-default { background-position: -200px -50px!important; }
+.sidebar-step6 .drs-icon-default { background-position: -250px -50px!important; }
+.sidebar-step7 .drs-icon-default { background-position: -300px -50px!important; }
+.sidebar-step8 .drs-icon-default { background-position: -350px -50px!important; }
+.sidebar-step9 .drs-icon-default { background-position: -400px -50px!important; }
+
+.drs-icon-complete { background-position: 0px -100px!important; }
+
+
+
+
+
+
+
+
+
+@media print {
+    /* Bootstrap table override */
+    .table td, .table th {
+        background: transparent !important;
+    }
+    
+    /* Make page content full screen on print, and hide sidebar */
+    .sidebar {
+        display: none !important;
+    }
+}

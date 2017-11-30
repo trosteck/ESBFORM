@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<!-- saved from url=(0086)file:///Volumes/Dispute%20Resolution%20Office/Intake%20Form%20Template/Intake_Form.htm -->
+<html class=" no-touchevents no-touchevents no-touchevents"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    
+    <!-- <script src="js/salesforce_interface.js"></script> -->
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="./Intake_Form_files/bootstrap.css" type="text/css">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="./Intake_Form_files/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="./Intake_Form_files/jquery-ui.theme.min.css" type="text/css">
+    
+    <!-- DRS -->
+    <link rel="stylesheet" href="./Intake_Form_files/feedback.css" type="text/css">
+    
+    <!-- Custom -->
+    <link rel="stylesheet" href="./Intake_Form_files/base.css" type="text/css">
+    <link rel="stylesheet" href="./Intake_Form_files/form.css" type="text/css">
+    <link rel="stylesheet" href="./Intake_Form_files/sidebar.css" type="text/css">
+    <link rel="stylesheet" href="./Intake_Form_files/respondent_actions.css" type="text/css">
+    <link rel="stylesheet" href="./Intake_Form_files/respondent_actions_print.css" type="text/css" media="print">
+    
+    <link rel="stylesheet" href="./Intake_Form_files/es_poc.css" type="text/css">
+    
+
+    <title>Respondent Options - Civil Resolution Tribunal</title>
+    
+    <script src="./Intake_Form_files/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        var REMOTE_ACTIONS = {
+            login                : '{!$RemoteAction.DRS_RespondentValidation_Controller.login}',
+            submitTimeExtension  : '{!$RemoteAction.DRS_RespondentValidation_Controller.submitTimeExtension}',
+            submitSupportRequest : '{!$RemoteAction.DRS_RespondentValidation_Controller.submitSupportRequest}',
+            sendEmail            : '{!$RemoteAction.DRS_RespondentValidation_Controller.sendEmail}'
+        };
+
+        var RespondentValidationController = (function() {
+            //Constructor
+            function RespondentValidationController(remoteActions) {
+                this.remoteActions = remoteActions
+            }
+
+            RespondentValidationController.prototype.login = function(requestJSON, callback) {
+                callRemoteAction(this.remoteActions.login, requestJSON, callback);
+            }
+
+            RespondentValidationController.prototype.submitTimeExtension = function(requestJSON, callback) {
+                callRemoteAction(this.remoteActions.submitTimeExtension, requestJSON, callback);
+            }
+
+            RespondentValidationController.prototype.submitSupportRequest = function(requestJSON, callback) {
+                callRemoteAction(this.remoteActions.submitSupportRequest, requestJSON, callback);
+            }
+
+            RespondentValidationController.prototype.sendEmail = function(requestJSON, callback) {
+                callRemoteAction(this.remoteActions.sendEmail, requestJSON, callback);
+            }
+            
+            function callRemoteAction(remoteActionName, requestJSON, callback) {
+                Visualforce.remoting.Manager.invokeAction(
+                    remoteActionName,
+                    requestJSON, 
+                    function(result, event) {
+                        if(event.status) {
+		                    if(result && result.hasOwnProperty('isError') && result.isError === false)
+		                        callback.success(result);
+		                   	if(result && result.hasOwnProperty('isError') === false)
+		                        callback.success(result);
+		                    else
+		                        callback.error(result.message);
+		                }
+		                else {
+		                    callback.error(event.message);
+		                }
+                    }
+                );
+            }
+
+            return RespondentValidationController; 
+        })();
+        
+        var respondentValidationController = new RespondentValidationController(REMOTE_ACTIONS);
+        
+        function initializeSalesforceTriggers() {
+                /* Purpose:
+                    To set up external Salesforce pushes and responses
+                */
+                $.salesforce_interface = {
+                    submit_support_request: function(JSON_data) {
+                        respondentValidationController.submitSupportRequest(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.submit_support_request_success,
+                                error: this.form_triggers.submit_support_request_error
+                            }
+                        );
+                    },
+					
+					
+					
+                    submit_entry_page: function(JSON_data) {
+                    	// Temporary for local development
+						// happy path
+						var responseGood = {
+                            EP_getRespondentClaimsList: {
+                                "dispute_priority":"normal",
+                                "response_due": null,
+                                "date_of_response": null,
+                                "party_type":"person",
+                                "sub_type": "owner",
+                                "claims":[
+                                    {
+                                        "claim_number": "C-000406",
+                                        "remedies" : [
+                                            { "remedy_number": "R-000231", },
+                                            {"remedy_number": "R-000320", }
+                                        ]
+                                    },
+                                    { 
+                                        "claim_number": "C-000551",
+                                        "remedies" : [
+                                            {"remedy_number": "R-000231",}
+                                        ]
+                                    }
+                                ]
+                            }
+						};
+						
+						var responseBad = {
+                            message: "The dispute ST-2016-12334 is not open. You may not access this dispute. If you have any questions, contact us."
+                        };
+						
+						//this.form_triggers.submit_entry_page_error(responseBad);
+						this.form_triggers.submit_entry_page_success(responseGood);
+                        return;
+                        
+						respondentValidationController.login(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.submit_entry_page_success,
+                                error: this.form_triggers.submit_entry_page_error
+                            }
+                        );
+                    },
+     
+                    
+                    submit_extension_form: function(JSON_data) {
+                        // Temporary for local development
+						
+						var responseGood = {
+                            transaction_id : "PF-00023152",
+						};
+						this.form_triggers.submit_extension_form_success(responseGood);
+                        return;
+						
+						/*
+						var responseBad = { 
+							"message": "There has been an error submitting your request. Please try again.  If you continue to see this error please contact us." 
+						};
+						
+						this.form_triggers.submit_extension_form_error(responseBad);
+						
+						*/
+						
+						// End of temporary for local development
+                        
+                        respondentValidationController.submitTimeExtension(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.submit_extension_form_success,
+                                error: this.form_triggers.submit_extension_form_error
+                            }
+                        );
+						
+                    },
+                    
+					
+					
+					submit_response_step1_success: function(JSON_data) {
+                        this.form_triggers.submit_response_step1_success_form_success();
+                        return;
+                        
+                        respondentValidationController.substituteService(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.submit_special_instruction_form_success,
+                                error: this.form_triggers.submit_special_instruction_form_error
+                            }
+                        );
+                    },
+						
+					
+                    submit_special_instruction_form: function(JSON_data) {
+                        this.form_triggers.submit_special_instruction_form_success();
+                        return;
+                        
+                        respondentValidationController.substituteService(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.submit_special_instruction_form_success,
+                                error: this.form_triggers.submit_special_instruction_form_error
+                            }
+                        );
+                    },
+                    
+                    submit_remove_one_form: function(JSON_data) {
+                        this.form_triggers.submit_remove_one_form_success();
+                        return;
+                        
+                        respondentValidationController.withdraw(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.submit_remove_one_form_success,
+                                error: this.form_triggers.submit_remove_one_form_error
+                            }
+                        );
+                    },
+                    
+                    submit_withdraw_form: function(JSON_data) {
+                        respondentValidationController.withdraw(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.submit_withdraw_form_success,
+                                error: this.form_triggers.submit_withdraw_form_error
+                            }
+                        );
+                    },
+
+                    send_summary_email: function(JSON_data) {
+                        
+                        respondentValidationController.sendEmail(
+                            JSON_data,
+                            {
+                                success: this.form_triggers.send_summary_email_success,
+                                error: this.form_triggers.send_summary_email_error
+                            }
+                        );
+                    },
+
+                    // Page triggers for success/error callback functionality.  Page registers its functionality here
+                    form_triggers: {}
+                };
+            }
+            initializeSalesforceTriggers();
+    </script>
+    <script data-main="js/main" src="./Intake_Form_files/require.js"></script>
+    <script type="text/javascript">
+        function baseURL() {
+            return "{!URLFOR($Resource.DRS_RespondentValidation_ZIP, '/')}";
+        }
+        
+        $.RunTimeConvert = function() {
+            $(document).ready(function() {
+                $('img')
+                    .filter(function() {return $(this).attr('src') && $(this).attr('src').indexOf("BASE_URL_PATH/") !== -1})
+                    .each(function() { $(this).attr('src', $(this).attr('src').replace('BASE_URL_PATH/', baseURL())); });
+            });
+        };
+        
+    </script>
+<script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main" src="./Intake_Form_files/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="app" src="./Intake_Form_files/app.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="utilities" src="./Intake_Form_files/utilities.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="moment" src="./Intake_Form_files/moment.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="es6-shim" src="./Intake_Form_files/es6-shim.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery-ui" src="./Intake_Form_files/jquery-ui.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="./Intake_Form_files/underscore.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone" src="./Intake_Form_files/backbone.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="router" src="./Intake_Form_files/router.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone-forms" src="./Intake_Form_files/backbone-forms.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/main_model" src="./Intake_Form_files/main_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="config" src="./Intake_Form_files/config.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="scrollintoview" src="./Intake_Form_files/jquery.scrollintoview.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/application_page_model" src="./Intake_Form_files/application_page_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/application_receipt_page_model" src="./Intake_Form_files/application_receipt_page_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/layout_view" src="./Intake_Form_files/layout_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/application_page_view" src="./Intake_Form_files/application_page_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/application_receipt_page_view" src="./Intake_Form_files/application_receipt_page_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="loader" src="./Intake_Form_files/loader.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="constants" src="./Intake_Form_files/constants.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="formbuilder" src="./Intake_Form_files/formbuilder.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/formal_communication_model" src="./Intake_Form_files/formal_communication_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/email_model" src="./Intake_Form_files/email_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/phone_list_model" src="./Intake_Form_files/phone_list_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/phone_model" src="./Intake_Form_files/phone_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/fax_model" src="./Intake_Form_files/fax_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/address_model" src="./Intake_Form_files/address_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/person_extra_considerations_model" src="./Intake_Form_files/person_extra_considerations_model.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="bootstrap" src="./Intake_Form_files/bootstrap.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/header_view" src="./Intake_Form_files/header_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/footer_view" src="./Intake_Form_files/footer_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="text" src="./Intake_Form_files/text.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/page_view" src="./Intake_Form_files/page_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/contact_us_communication_view" src="./Intake_Form_files/contact_us_communication_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/email_view" src="./Intake_Form_files/email_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/phone_list_view" src="./Intake_Form_files/phone_list_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/fax_view" src="./Intake_Form_files/fax_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/address_view" src="./Intake_Form_files/address_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/person_extra_considerations_view" src="./Intake_Form_files/person_extra_considerations_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Modernizr" src="./Intake_Form_files/modernizr.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="views/phone_view" src="./Intake_Form_files/phone_view.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mailcheck" src="./Intake_Form_files/mailcheck.min.js"></script></head>
+<body class="">
+   
+    <div id="page-content-container"><div id="main">
+    <div id="header"><div><nav class="navbar navbar-inverse navbar-fixed-top hidden-print">
+  <div class="container">
+    <!-- TODO: Hide Contact Us functionality in POC
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        -->
+      
+      <div class="site-logo-container">
+          <div class="tribunal-brand-logo">
+            <a href="https://drs-int.hive1-cs.com/SE_Integration/?int=Expert%20System%20csse&amp;accessCode=TyNpTHKzn#"><img src="./Intake_Form_files/Header_BCLogo_ORIG.jpg" style="height:40px;"></a>
+          </div>
+          <div class="site-logo-text">Employment Standards Branch<span class="hidden-xs"></span> <span class="site-logo-text-beta">BETA</span></div>
+      </div>
+    
+    <!-- TODO: Hide Contact Us functionality in POC
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">	
+       <li><a class="help-link">Contact us</a></li>
+      </ul>
+    </div>
+    -->
+  </div>
+  <div class="es-site-sub-brand hidden-print"></div>
+</nav>
+
+<!-- Heading for print versions -->
+<div class="visible-print"><h1><strong>Family Justice Services Beta</strong></h1></div>
+
+<!-- Sub brand - I think this can move to it's own template -->
+<!--
+<div class="site-sub-brand hidden-print">
+	<div class="container">
+    	<a href="">Family Justice Services Beta</a>
+	</div>
+</div>
+-->
+
+
+<!-- Feedback container -->
+<div class="feedback-container"></div>
+
+<!-- Something Broken infowindow -->
+<!-- TODO: Disable contact us form for POC
+<div id="infoWindowHelp" class="infowindow">
+    <div class="window-content col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2" style="padding-bottom: 50px;">    
+        <div class="contact-form"> 
+           
+       
+               
+			<div class="drs-dropdown-form margin-bottom20" data-required="True">
+				<div>
+			   <label for="CR_why" class="control-label">Why are you contacting us?</label>
+				<label class="error-label hidden">why you're contacting us</label>
+				</div>
+				<select id="CR_why" class="form-control es_contact_form_missing_reasons">
+					<option class="option_first" selected="true" value="">  Select the option that best applies</option>
+					<option>I lost my PIN</option>
+					<option>I lost my Dispute Notice</option>
+					<option>Website not working</option>
+					<option>Other</option>
+				</select>
+				<p class="help-block drs-help-block"></p> 
+			</div>
+                
+                
+           
+            <div class="es_contact_form_description drs-textarea-form margin-bottom20" data-required="True">
+                <label for="CF_contact_form_desc" class="control-label">Please describe</label>
+                <label class="error-label hidden">description</label>
+                <textarea id="CF_contact_form_desc" class="form-control" max="800" maxlength="800"></textarea>
+                <p class="textarea-warning textarea-length-warn"></p>
+                <p class="help-block drs-help-block"></p> 
+            </div>
+
+            <div class="drs-dropdown-form" data-required="True">
+                <label for="CF_replyYN" class="control-label">Do you want a reply?</label>
+                <select id="CF_replyYN" class="form-control reply_yn">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+                <p class="help-block drs-help-block"></p> 
+            </div>
+
+            <div class="reply-requested drs-email-form" data-required="True">
+                <label for="CF_email" class="control-label">Email address</label>
+                <input id="CF_email" type="text" name="help_email" class="form-control es_contact_form_email" />
+                <p class="help-block drs-help-block"></p>    
+            </div>
+
+            <div class="infowindow-action">
+                <button type="button" class="btn btn-primary es_submit_contact_form">Submit</button>
+                <a class="feedback-action-secondary close-infowindow">Cancel</a>
+            </div>
+
+
+        </div>
+        <div class="es_contact_form_response" style="display: none;">
+            <h1>Thank You</h1>
+            <p style="font-size: 16px;margin-bottom: 20px;">Thanks for sending in your feedback, question or suggestion.</p>
+
+            <p style="font-size: 16px;">If you requested a reply, we’ll be in touch during office hours. Our office hours are between 9am and 5pm PST.</p>
+
+
+            <div class="es_infowindow_action">
+                <a class="es_button es_button_34 es_primary es_set_width es_cancel_contact_form feedback-action-secondary"><span class="es_feedback_button_text">Close, return to dispute notice options</span></a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+--></div></div>
+    <div id="menu"></div>
+	<div id="content" role="main"><div id="page-contents" style="display: block;">
+<!-- Main content -->
+<div class="container" role="main">
+
+    <div class="row">  
+       
+        
+        <div class="col-md-9 col-lg-9 margin-bottom20">
+            <div id="es-exploration-data-container" class="es-data-container">
+    <div class="form-section margin-bottom30">
+        <div class="margin-bottom10">
+        <h2 class="es-data-number-issues-title">
+            
+                1 issue found <span class="es-data-number-issues-subtitle"> Solution Explorer - <a href="https://csse-solutionexplorer.cs50.force.com/" target="_blank"></a></span>
+        </h2>
+        <p class="margin-bottom10">Summary of your dispute:</p>
+<ul>
+    <li>I'm an employee</li>
+    <li>I was fired or permanently laid off</li>
+    <li>I didn't receive one or more paycheques after being fired or laid off</li>
+    <li>I think I'm also owed severance pay</li>
+    <li>I worked for 3 months - 1 year before being laid off</li>
+</ul>
+        
+        
+        </div>
+    </div>
+</div>
+        </div>
+            
+        
+        <div class="col-md-9 col-lg-9">
+            	
+			<div class="page-error-block-container hidden-form">        
+				<div class="page-error-block">
+				</div>
+				<div class="page-error-block-sub">
+				</div>
+			</div>
+                
+                
+            <div id="applicant-page-form"><form method="POST" novalidate="">    	
+
+	<div class="margin-bottom30">
+	
+        <div class="form-section margin-bottom30">  
+            <div class="row">
+                <div class="col-sm-12"><h2 class="form-section-title">Your information</h2></div>
+            </div> 
+
+            <div class="form-group">
+                <label for="person_first_name" class="control-label required">First name</label>
+                <div data-editors="person_first_name"><input id="updated-first-name" name="person_first_name" class="form-control input-max-width400" maxlength="40" type="text"></div>
+                <label class="hidden error-label">correct legal first name</label>
+                <div class="error-container">
+                    <p class="error-block"></p>
+                </div>
+            </div>
+
+            <div class="form-group margin-bottom30">
+                <label for="person_last_name" class="control-label required">Last name</label>
+                <div data-editors="person_last_name"><input id="updated-last-name" name="person_last_name" class="form-control input-max-width400" maxlength="40" type="text"></div>
+                <label class="hidden error-label">correct legal last name</label>
+                <div class="error-container">
+                    <p class="error-block"></p>
+                </div>
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    <div class="margin-bottom30">
+    
+        <div class="form-section">  
+            <div class="row">
+                <div class="col-sm-12"><h2 class="form-section-title">Contact information</h2></div>
+            </div>  
+            
+            <div class="padding-10">
+                <div id="person-mail-address">  
+	<div class="row margin-bottom10">
+		<div class="col-sm-12 form-group">
+			<label for="address_line_1" class="control-label">Address Line 1</label>
+			<span class="help-block">Street address, P.O box, c/o, etc</span>
+			<div data-editors="address_line_1"><input id="address-line-1" name="address_line_1" class="form-control" type="text"></div>
+			<label class="hidden error-label">address line 1</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div>
+	<div class="row margin-bottom10">
+		<div class="col-sm-12 form-group">
+			<label for="address_line_2" class="control-label optional">Address line 2</label>
+			<span class="help-block">Apartment, suite, unit, building, floor, etc</span>
+			<div data-editors="address_line_2"><input id="address-line-2" name="address_line_2" class="form-control" type="text"></div>
+			<label class="hidden error-label">address line 2</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div>                       
+	<div class="row margin-bottom10">
+		<div class="col-sm-12 form-group">
+			<label for="country" class="control-label required">Country</label>
+			<div data-editors="country"><select id="mail-country" name="country" class="form-control"><option value="Canada">Canada</option><option value="US">US</option><option value="Other">Other</option></select></div>
+			<label class="hidden error-label">country</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div>
+    <div class="row margin-bottom10 hidden-form">
+        <div class="col-sm-12 form-group">
+            <label for="other_country" class="control-label required">Other country</label>
+            <div data-editors="other_country"><input id="mail-other-country" name="other_country" class="form-control" maxlength="100" type="text"></div>
+            <label class="hidden error-label">other country</label>
+            <div class="error-container">
+                <p class="error-block"></p>
+            </div>
+        </div>
+    </div>
+	<div class="row margin-bottom5  hidden-form">
+		<div class="col-sm-12 form-group">
+			<label for="other_region" class="control-label required">Province / Region</label>
+			<div data-editors="other_region"><input id="mail-province" name="other_region" class="form-control" maxlength="100" type="text"></div>
+			<label class="hidden error-label">province or region</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div>
+    <div class="row margin-bottom5  hidden-form">
+		<div class="col-sm-12 form-group">
+			<label for="state" class="control-label required">State</label>
+			<div data-editors="state"><select id="mail-state-dropdown" name="state" class="form-control"><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option></select></div>
+			<label class="hidden error-label">state</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div>
+	<div class="row margin-bottom10  ">
+		<div class="col-sm-12 form-group">
+			<label for="province" class="control-label required">Province</label>
+			<div data-editors="province"><select id="mail-province-dropdown" name="province" class="form-control"><option>Alberta</option><option>British Columbia</option><option>Manitoba</option><option>New Brunswick</option><option>Newfoundland and Labrador</option><option>Northwest Territories</option><option>Nova Scotia</option><option>Nunavut</option><option>Ontario</option><option>Prince Edward Island</option><option>Quebec</option><option>Saskatchewan</option><option>Yukon</option></select></div>
+			<label class="hidden error-label">province</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div>
+	<div class="row margin-bottom10">
+		<div class="col-sm-12 form-group">
+			<label for="city" class="control-label required">City</label>
+			<div data-editors="city"><input id="mail-city" name="city" class="form-control input-max-width400" maxlength="100" type="text"></div>
+			<label class="hidden error-label">city</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div>
+	<div class="row margin-bottom10">
+		<div class="col-sm-12 form-group">
+			<label for="postal_code" class="control-label required">Postal Code</label>
+			<div data-editors="postal_code"><input id="mail-postal-code" name="postal_code" class="form-control input-max-width100" maxlength="10" type="text"></div>
+			<label class="hidden error-label">postal code</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	</div> 
+</div>
+            </div>
+        </div>
+    </div></form>
+    
+    <div class="margin-bottom30">
+        
+        <div class="form-section margin-bottom30">
+            <div class="row margin-bottom20">
+                
+            </div>
+            <div id="contact-us-communication-form"><form method="POST" novalidate="">  
+   
+	<div class="form-group">
+		<label for="contact-us-communication-choice" class="control-label nomargin-bottom required">How do you want us to contact you?</label>
+		<div data-editors="formal_communication"><ul id="contact-us-communication-choice" name="formal_communication" class="radio radio-responsive">          <li>        <input type="radio" name="formal_communication" value="Email" id="c3_formal_communication-0">        <label for="c3_formal_communication-0">Email</label>      </li>          <li>        <input type="radio" name="formal_communication" value="Phone" id="c3_formal_communication-1">        <label for="c3_formal_communication-1">Phone</label>      </li>          <li>        <input type="radio" name="formal_communication" value="Pickup" id="c3_formal_communication-2">        <label for="c3_formal_communication-2">I will print this form and contact you at 1-888-888-8888</label>      </li>      </ul></div>
+		<label class="hidden error-label">communication method</label>
+		<div class="error-container">
+			<p class="error-block"></p>
+		</div>
+	</div>
+    
+</form></div>
+        </div>
+        
+        <div id="contact-us-communication-email-form" class="margin-bottom10"><form method="POST" novalidate="">   	
+	<div class="row">
+		<div class="col-sm-12 form-group">
+			<label for="email_address" class="control-label required">Email</label>
+			
+			<div data-editors="email_address"><input id="email-address" name="email_address" class="form-control input-max-width400" maxlength="250" type="text"></div>
+			<div id="email-suggestion" class="email-suggestion margin-bottom10 input-max-width400 hidden-form">
+				Did you mean <span id="mailcheck-suggestion-link" class="drs-mailcheck-link"></span>?
+			</div>
+			<label class="hidden error-label">email</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+			
+			<div id="unable-to-use-email" class="padding-top5 hidden">
+			<a href="https://drs-int.hive1-cs.com/SE_Integration/?int=Expert%20System%20csse&amp;accessCode=TyNpTHKzn#" style="color:#687180;" data-toggle="modal" data-target="#addTechnologyWaiver">Unable to use email?</a>
+			</div>
+			
+		</div>
+	</div>	
+	
+			
+            <!-- modal dialog -->
+            <div class="modal fade" id="addTechnologyWaiver" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+    
+                        <div class="modal-header"><!-- modal header -->
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">Unable to use email?</h4>
+                        </div><!-- /modal header -->
+    
+                        <!-- modal body -->
+                        <div class="modal-body">
+                       
+                            <div class="row">
+                            	<div class="col-sm-12">
+                               
+                               		<p class="margin-bottom20"><i class="glyphicon glyphicon-info-sign"></i>It may take longer to resolve your dispute if you're not using email.</p>
+                               
+									<div class="form-group">
+										<label class="control-label required" for="desc">Tell us why you can't use email</label>  
+										<div data-editors="reasonNotUsingEmail"><textarea id="reason-not-using-email" name="reasonNotUsingEmail" class="form-control" rows="4" maxlength="400"></textarea></div>
+										<label class="hidden error-label">reason</label>
+										<div class="error-container">
+											<p class="error-block"></p>
+										</div>
+									</div>
+
+									<p>We'll communicate with you by phone and mail. You'll be responsible for the time and cost of mailing copies of your documents to the Civil Resolution Tribunal and to all other people in the dispute.</p>
+
+                 
+                            
+                            	</div>
+                            </div>
+                            
+                            </div>
+                            <!-- /modal body -->
+    
+                            <div class="modal-footer"><!-- modal footer -->
+                                
+                                <button class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                                <button type="button" class="btn btn-primary btn-add-waiver">Yes, use phone and mail</button>
+                            </div><!-- /modal footer -->
+    
+                        </div>
+                    </div>
+                </div>							
+											
+															
+</form></div>
+        <div id="person-phone-list-form"><form method="POST" novalidate=""> 
+	<div class="margin-bottom30"> 
+		<div id="phone-item-form"><div> 
+	<div class="form-group margin-bottom10">
+		<div class="error-anchor"></div>
+		<label for="phone_number" class="control-label optional">Daytime phone number</label>
+
+		<table class="table-phone">
+			<tbody><tr>
+				<td><div data-editors="phone_number"><input id="phone_number" name="phone_number" class="form-control input-max-width250" maxlength="80" type="text"></div></td>
+				<td><label for="phone_extension" class="control-label optional-nolbl">Ext.</label></td>
+				<td><div data-editors="phone_extension"><input id="phone_extension" name="phone_extension" class="form-control input-max-width75-static" maxlength="10" type="text"></div></td>
+				<td class="hidden"><a href="https://drs-int.hive1-cs.com/SE_Integration/?int=Expert%20System%20csse&amp;accessCode=TyNpTHKzn#" class="btn-remove-phone"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i><span class="hidden-xs">Remove</span></a></td>
+			</tr>
+		</tbody></table>
+		<div>
+			<label class="hidden error-label">phone number</label>
+			<div class="error-container">
+				<p class="error-block"></p>
+			</div>
+		</div>
+	
+	</div>						
+</div></div>
+		<div class="add-phone-container">
+            <a href="https://drs-int.hive1-cs.com/SE_Integration/?int=Expert%20System%20csse&amp;accessCode=TyNpTHKzn#" class="add-phone"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i>Add another phone</a>
+        </div>   	
+	</div></form>
+</div>
+        
+    </div>
+    <div class="margin-bottom30">
+        <div class="form-section margin-bottom30">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="form-section-title">Special considerations</h2>
+                    
+                </div>
+            </div>
+            
+            <div id="person-extra-considerations-form" class="margin-bottom30"><form method="POST" novalidate="">    
+
+	<div class="margin-bottom30">
+		<div class="row">
+			<div class="col-lg-12">
+				<label for="special_accomodations" class="control-label nomargin-bottom required">Do any of the following apply to your situation?</label>
+				<div data-editors="special_accomodations"><ul id="special-accomodation" name="special_accomodations" class="radio radio-vertical"><li><input type="checkbox" name="special_accomodations" id="c6_special_accomodations-0" value="Difficulty reading and writing"><label for="c6_special_accomodations-0">I'm in a union and covered by a collective agreement</label></li><li><input type="checkbox" name="special_accomodations" id="c6_special_accomodations-1" value="English speaking difficulty"><label for="c6_special_accomodations-1">I want you to notify my employer that I'm making a complaint</label></li><li><input type="checkbox" name="special_accomodations" id="c6_special_accomodations-2" value="Visual impairment"><label for="c6_special_accomodations-2">I need an interpreter</label></li><li><input type="checkbox" name="special_accomodations" id="c6_special_accomodations-3" value="Hearing impairment"><label for="c6_special_accomodations-3">I have a hearing impairment</label></li></ul></div>
+			</div>
+		</div>
+		<div id="other-accomodation-form" class="row hidden-form">
+			<div class="col-lg-12 form-group">
+				<label for="special_accomodation_other_text" class="control-label nomargin-bottom required">Please specify:</label>
+				<div data-editors="special_accomodation_other_text"><input id="other-special-accomodation" name="special_accomodation_other_text" class="form-control input-max-width400" maxlength="200" type="text"></div>
+				<label class="hidden error-label">description</label>
+				<div class="error-container">
+					<p class="error-block"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row hidden">
+		<div class="col-lg-12">
+			<label for="under_19" class="control-label nomargin-bottom required">Are you under 19 years old?</label>
+			<div data-editors="is_under_19"><ul id="under-19" name="is_under_19" class="radio radio-responsive">          <li>        <input type="radio" name="is_under_19" value="false" id="c6_is_under_19-0">        <label for="c6_is_under_19-0">No</label>      </li>          <li>        <input type="radio" name="is_under_19" value="true" id="c6_is_under_19-1">        <label for="c6_is_under_19-1">Yes</label>      </li>      </ul></div>
+		</div>
+	</div>
+
+</form></div>
+            
+            <div class="form-group">
+                <div class="error-anchor"></div>
+                <label for="additional-information" class="control-label optional">Anything else you'd like us to know?</label>
+                
+                <div data-editors="additional_information"><textarea id="additional-information" name="additional_information" class="form-control" rows="5" maxlength="1000"></textarea></div>
+                <label class="hidden error-label">additional information</label>
+                <p class="help-block countdown-block">Max 1000 characters <span class="countdown"></span></p>
+                <div class="error-container">
+                    <p class="error-block"></p>
+                </div>
+            </div> 
+        </div>
+    </div>	
+
+</div>
+               
+                      
+             <br> 
+             <br>                 
+                            
+
+            
+            <div class="margin-bottom30 btn-row row form-submit">
+                <div class="col-lg-12">
+					<button id="form-submit-button" type="click" class="btn btn-primary">Submit<span class"hidden-xs"=""> application</span></button>
+                </div>
+            </div>
+            
+            
+            <br> 
+            <br> 
+            <br> 
+            <br> 
+            
+
+        </div>
+    </div>
+</div>
+
+</div></div>
+</div>
+<div id="footer"><div><!--<div class="container footergreybg boxshadow">&nbsp;</div>--></div></div></div>
+    
+    
+    <div class="modal fade" id="loading_dialog" data-backdrop="static" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Loading ...</h4>
+                </div>
+                <div class="modal-body" style="text-align:center;">
+                    <p>
+                        <img src="./Intake_Form_files/es_loader_blue_lrg.gif">
+                    </p>
+                    <p>Please wait a few moments</p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --> 
+    
+      
+
+
+
+
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>

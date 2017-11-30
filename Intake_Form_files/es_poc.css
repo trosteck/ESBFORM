@@ -1,0 +1,182 @@
+
+.es-data-container {
+    
+}
+
+.es-data-number-issues-title {
+    
+}
+
+.page-action:hover, .page-action:focus, .page-action:active {
+    color: #687180;
+}
+
+.print-action-container {
+    margin-left:20px;
+}
+
+.es-data-number-issues-subtitle {
+    font-size: 17px;
+    display: inline-block;
+    float: right;
+}
+
+.es-data-issue-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    
+    padding: 8px 8px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.es-data-issue-steps-title {
+    margin-bottom: 5px;
+}
+
+
+#content {
+    padding-top: 60px;
+}
+
+ /** Site specific banner overrides - from global_css -> base.css
+ **************************************************************** **/
+.navbar, .navbar-inverse, .navbar-fixed-top { 
+	box-shadow: 0 0px 0px 0px #cccccc;
+    -moz-box-shadow: 0 0px 0px 0px #cccccc;
+    -webkit-box-shadow: 0 0px 0px 0px #cccccc;
+	margin-bottom: 0px;
+	background-color: #003366;
+}
+
+
+.site-logo-container {
+    
+}
+
+.tribunal-brand-logo {
+    display: inline-block;
+}
+
+.site-logo-text {
+    font-size: 16px;
+    padding-left: 10px;
+    line-height: 25px;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    color: #fff;
+    display: inline-block;
+    border-left: 1px solid #9d7c39;
+    position: relative;
+    top: 3px;
+}
+
+.site-logo-text-beta {
+    font-style: italic;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #d3a01f;
+}
+
+.es-site-sub-brand {
+    height: 3px;
+    background-color: #828181;
+    margin-left: 15px;
+    overflow: hidden;
+    position: relative;
+    top: 5px;
+}
+
+
+/* Style updates from MH, Feb 21 2017 */
+
+.es-data-container > div{
+    background-color: #f3f3f3;
+    padding: 15px 15px 5px 15px;
+    margin-top: 20px;
+}
+
+.form-section h2 {
+    margin: 5px 0px 20px 0px;
+    padding-bottom: 8px;
+    border-bottom: solid 2px #fff;
+    font-size: 21px;
+    line-height: 26px;
+}
+
+h2.form-section-title {
+    margin: 45px 0px 18px 0px;
+    padding-bottom: 5px;
+    border-bottom: solid 1px #dddddd;
+    font-size: 21px;
+    line-height: 26px;
+}
+
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
+input[type="checkbox"] + label {
+    padding-left: 32px;
+    min-height: 31px;
+    display: inline-block;
+    font-size: 17px;
+    padding: 2px 0px 10px 38px;
+}
+
+input[type="radio"] + label {
+    padding-left: 32px;
+    min-height: 31px;
+    display: inline-block;
+    padding-top: 2px;
+    font-size: 17px;
+}
+
+
+
+
+
+@media (max-width: 991px) {
+    .es-site-sub-brand {
+        margin-left: 0;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .navbar .container {
+        padding-left: 5px;
+    }
+    
+    .site-logo-text {
+        padding-left: 5px;
+    }
+    
+    
+    .es-data-issue-title {
+        /* background-color: #eaeaea; */
+    }
+}
+
+@media print {
+    #content {
+        padding-top: 0;
+    }
+    
+    #page-contents .container {
+        padding-left:0;
+        margin-left:0;
+    }
+    
+    .print-action-container {
+        margin-left: 0;
+    }
+    
+    .table-receipt td:first-child {
+        width:220px;
+    }
+}

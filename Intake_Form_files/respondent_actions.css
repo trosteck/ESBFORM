@@ -1,0 +1,557 @@
+@charset "UTF-8";
+
+
+/** ************************************* **
+
+	TABLE CONTENTS
+	---------------------------
+		01. Entry page (May want to move global for respondent actions to use)
+		02. Aside grey box (May want to move global for respondent actions to use)
+		03. Extra styles 
+		04. Override Form Elements
+	---------------------------
+
+ ** ************************************* **/
+
+h2.form-section-title { 
+	margin: 12px 0px;
+	padding-bottom: 5px;
+	border-bottom: solid 1px #dddddd;
+	font-size: 20px;
+	line-height: 26px;
+}
+
+h2 { line-height: 25px; }
+
+.nomargin-top { margin-top: 0px; }
+.table-instruction > tbody > tr > td:nth-child(1) {
+	padding-right: 10px;
+}
+.table-instruction th { font-family: 'Century Gothic', 'Arial', sans-serif; font-size: 18px; }
+.table-instruction > tbody > tr > td { padding: 7px 0px; }
+.table-instruction > thead > tr > th { padding-left: 0px; }
+
+
+.input-max-width400 { max-width: 400px; }
+.input-max-width100 { max-width: 150px; }
+.input-max-width250 { max-width: 250px; }
+.input-max-width75 { max-width: 75px; }
+.input-max-width75-static { max-width: 75px; }
+
+
+.office-use-only { background-color: #f9f9f9; padding: 8px; border: solid 1px #ddd; border-radius: 2px; }
+.office-use-only-desc { margin-bottom: 3px; }
+.review-attribute-label { font-weight:bold;}
+.dark-grey { color: #666; }
+
+.help-block { margin: 0px 0px 4px 0px; }
+
+.radio, .checkbox {
+    margin-top: 0px;
+}
+
+
+hr.half-margins {
+		margin:30px 0;
+	border-top: 1px solid #ddd;
+}
+i.glyphicon { padding-right: 5px; }
+
+
+@media (max-width: 485px)
+{
+	.on-xs-block {
+		display:block;
+		width: 100%;
+	}
+.input-max-width400,
+.input-max-width100,
+.input-max-width250,
+.input-max-width75 { max-width: inherit; }
+	
+}
+.padding-top5 { padding-top: 5px; }
+a, a:hover, a:active, a:focus { outline: none; }
+
+/*override bootstrap margins for sm */
+@media (min-width: 768px) {
+.container {
+    /* width: 750px;*/ 
+	width: inherit;
+}
+}
+
+@media (min-width: 992px) {
+.container {
+    width: 970px;
+}
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+
+
+/*phone*/
+.table-phone {}
+.table-phone td:nth-child(2) { width: 40px; text-align: right;padding-top:5px; }
+.table-phone td:nth-child(4) { padding-left: 5px; }
+.table-phone td:first-child { width: 150px; }
+@media (min-width: 485px) {
+	.table-phone td:first-child { width: 250px; }
+}
+
+.email-suggestion { background-color: #eaeaea; padding: 6px 7px; text-align: right; font-size: 14px; }
+
+.page-action {
+	color:#687180;
+}
+.page-action:hover,
+.page-action:focus,
+.page-action:active{
+	color:#286090;
+}
+
+
+.date-input { width: 100%;  }
+.mobile-date-picker { 
+	width: 100%!important; 
+	max-width: 300px; 
+	min-width: 280px; 
+}
+
+.td-informal-preference-action { margin-left: 40px; }
+@media (min-width: 485px) {
+	.table-informal-preference { display:table; }
+	.td-informal-preference { display:table-cell; }
+	.td-informal-preference-action { 
+		display:table-cell; 
+		margin-left: 5px;
+		vertical-align: top; 
+		padding-top:10px;
+	}
+}
+
+
+.modal-footer .btn {
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+}
+
+@media (min-width: 485px) {
+	.modal-footer .btn {
+		padding: 8px 16px;
+		font-size: 18px;
+		line-height: 1.42857143; 
+	}
+}
+
+
+
+
+
+
+
+
+
+
+/*to find home for */
+.badge-success {
+  background-color: #dff0d8!important;
+	color: #3c763d!important;
+	font-weight: bold!important;
+}
+.badge-danger {
+	color: #a94442;
+	background-color: #f2dede;
+	font-weight: bold!important;
+}
+
+highlight { color: #000; }
+
+.response-section { 
+	background-color: #eaeaea;
+	padding: 10px 15px; 
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+@media (min-width: 768px) {
+	.response-section { 
+		margin-left: 0px; 
+		margin-right: 0px;
+	}
+}
+
+
+
+/** 01. Entry page
+ **************************************************************** **/
+.site-entry {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  color: inherit; 
+}
+.site-entry,
+.site-entry-error {
+  margin: 0 auto;
+  /*max-width: 600px;*/
+}
+.site-entry p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 200;
+}
+.site-entry h1 {
+  font-size: 18px;
+  margin-top: 0px;
+ line-height: 24px;
+	font-weight:bold;
+} 
+.site-entry > hr {
+  border-top-color: #d5d5d5;
+}
+
+.container .site-entry,
+.container-fluid .site-entry {
+  padding-right: 0px; /* 15px */
+  padding-left: 0px; /* 15px */
+  border-radius: 6px;
+}
+.site-entry .container {
+  max-width: 100%;
+}
+.site-entry-links h2 {
+	padding-top:0px;
+	margin-top:0px;
+}
+
+
+@media screen and (min-width: 486px) {
+  .site-entry {
+	background-color: #eee;
+  }
+  .site-entry {
+    padding-top: 48px;
+    padding-bottom: 48px;
+	background-color: #eee;
+  }
+  .container .site-entry,
+  .container-fluid .site-entry {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+}
+
+
+
+/* Medium devices (desktops, 992px and up) */
+
+@media (min-width: 768px) {
+	.site-entry-links {
+		padding-top:48px;
+	}
+}
+
+
+
+
+/** 02. Aside grey box
+ **************************************************************** **/
+aside { font-size: 14px; margin-top: -20px; margin-bottom: 10px; padding: 10px 0px 10px 0px;  background-color: #f1f2f7; }
+aside h2 { margin:0px 0px 15px 0px; font-size: 16px; padding: 0px 0px 8px 0px; }
+aside hr.half-margins {  margin:10px 0; }
+
+.grey-row {
+	background-color:#f1f2f7;
+	padding:0px; 
+	-webkit-border-radius:6px;
+	   -moz-border-radius:6px;
+			border-radius:6px;
+}
+.summary-label { width: 123px; font-weight:bold; }
+
+.grey-row td { padding-bottom: 5px; }
+.links-list div { margin-bottom: 5px; }
+
+@media (max-width: 767px) {
+    .links-list div { margin-top: 10px; }
+}
+
+@media (min-width: 768px) {
+	aside h2 { font-size: 18px; }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	aside { margin-top: 35px; background-color: #ffffff;  padding: 0px; margin-bottom: 0px;}
+	aside h2 { border-bottom: solid 1px #cccccc; } 
+	.grey-row { padding:30px; margin-bottom:20px; }
+	aside hr.half-margins {  margin: 30px 0; }
+	.grey-row td { padding-bottom: 10px; }
+	.links-list { padding-top: 30px; }
+	.links-list div { margin-bottom: 10px; }
+}
+
+
+
+/** 03. Extra styles 
+ **************************************************************** **/
+.receipt-table-header {
+    font-weight: bold;
+}
+.table-receipt td:first-child { width: 150px; }
+
+@media (min-width: 768px) {
+	.table-receipt td:first-child { width: 200px; }
+}
+@media (min-width: 992px) {
+	.table-receipt td:first-child { max-width: 250px; }
+}
+
+
+
+.multiple-respondents {
+	width: 100%;	
+	display:table;
+}
+.multiple-respondents > .respondent-number { display:table-cell; padding: 7px 5px 10px 0px; vertical-align: top;}
+.multiple-respondents > .respondent-fields { display:table-cell; padding: 7px 20px 10px 10px; vertical-align: top; background-color:#f7f7f7;}
+.single-respondent {
+	background-color:#ffffff;padding: 0px;
+}
+.single-respondent > .respondent-number { display:none; }
+.single-respondent > .respondent-fields { float:none; padding: 0px; }
+
+
+.submission-display-row {
+    margin-bottom: 10px;
+}
+
+
+
+
+/** 04. Override Form Elements
+ **************************************************************** **/
+.form-horizontal .control-label { text-align:left; }
+
+@media (min-width: 1200px) {
+	.form-horizontal .control-label {
+		padding-top: 7px;
+		margin-bottom: 0;
+		text-align: right;
+	}
+}
+
+.error-anchor {
+    height:0;
+    width:0;
+    position:relative;
+    top: -165px;
+}
+
+
+ul.checkbox ul {
+    list-style-type: disc;
+}
+
+ul.checkbox ul > li {
+    margin-bottom: 0;
+}
+
+
+.input-group-addon {
+    cursor: pointer;
+}
+
+.ridinput { }
+@media (min-width: 350px) {
+    .ridinput { max-width: 120px; }/**/
+}
+
+.hidden-form {
+    display: none;
+}
+
+
+.textarea-warning { font-size: 0.9em; /*padding-right: 10px;*/ }
+.textarea-length-warn { color: #808080; }
+.has-error .textarea-warning { color: #a94442; } 
+.textarea-warning-over { color: #a94442; }
+.textarea-warning-under { color: #333; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Modal overrides */
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #83b2c2;
+    border-radius: 0px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.modal-header button, h4.modal-title {
+    color: #687180 !important;
+}
+.modal-header {
+	/*background-color: #ffffff;*/
+	color: #687180;
+	background-color: #ffffff;
+	/*background-color: DarkGray;*/
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+}
+.modal-body { position: relative; padding: 15px; font-size: 16px;
+}
+.modal-footer { padding: 15px; text-align: right;
+}
+
+.modal-exit-button {
+    position: absolute;
+    cursor:pointer;
+    right: 15px;
+    top: 15px;
+    font-size: x-large;
+}
+
+
+/* TAKEN FROM EEAT SITE */
+
+/*********************************
+footer style
+*********************************/
+
+.hidden {
+    visibility: hidden;
+}
+/*
+.panel-title {
+	font-size: 14px;
+}
+
+
+.tab-content>.active {
+display: block;
+visibility: visible;
+padding-top: 10px;
+}
+
+
+.marginTop {
+	margin-top:30px;
+}
+*/
+
+
+
+/* Sticky footer styles*/
+-------------------------------------------------- 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** 18. Dividers
+ **************************************************************** *
+.divider { color: #cccccc; }
+hr {
+	border:0;
+	margin:60px 0;
+	border-top:#ddd 1px solid;
+	border-bottom:#fff 1px solid;
+}
+	hr.half-margins {
+		margin:30px 0;
+	}
+hr.no-lines {
+	border:transparent 0px solid;
+}
+article hr {
+	margin:30px 0;
+}
+
+.divider {
+	border: 0;
+	margin: 60px 0;
+	height: 4px;
+	border-top: #ddd 1px solid;
+	border-bottom: #ddd 1px solid;
+	text-align: center;
+	position: relative;
+	clear: both;
+}
+	.divider.half-margins {
+		margin:30px 0;
+	}
+
+.divider .fa {
+	color: #bbb;
+	background: #f4f5f7;  same as background color 
+	text-align: center;
+	display: inline-block;
+	height: 50px; line-height: 50px;
+	text-align: center;
+	width: 50px;
+	font-size: 20px;
+
+	position: absolute;
+	top: -25px; left: 50%;
+	margin: 0 auto 0 -25px;
+
+}
+
+.divider.white .fa { for white background color OR white rounded icon 
+	background: #fff;
+	color: #333;
+}
+
+li.divider {
+	margin:6px;
+}
+*/
+

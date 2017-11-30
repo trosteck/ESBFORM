@@ -1,0 +1,613 @@
+@charset "UTF-8";
+
+/** ************************************* **
+
+	TABLE CONTENTS
+	---------------------------
+		01. Buttons
+		02. Radio and checkbox
+		03. Labels
+		04. Special Field Type Formatting
+		05. Error and Feedback Messages
+	---------------------------
+
+ ** ************************************* **/
+
+
+
+
+
+/** 01. Buttons
+ **************************************************************** **/
+.btn-primary {
+  color: #fff;
+  background-color: #687180;
+  border-color: #687180;
+}
+.add-phone,
+.btn-remove-file,
+.expand-arrow { color: #687180!important; }
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px; margin-bottom: 0;
+    font-size: 18px;
+    font-weight: normal; line-height: 1.42857143; text-align: center;
+    white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent;   
+    border-radius: 4px;
+}
+.btn-sm {
+	padding: 3px 7px;
+    font-size: 15px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #687180;
+    border-color: #687180;
+}
+
+
+
+
+.btn-secondary { 
+  color: #333;
+  background-color: #eaeaea;
+  border-color: #adadad;	
+}
+.btn-secondary:focus,
+.btn-secondary.focus {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+.btn-secondary:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.btn-secondary:active,
+.btn-secondary.active {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+
+
+
+
+
+.btn-reset {
+    color: #687180;
+    background-color: #fff;
+    border-color: #687180;
+}
+
+.drs-receipt-email-btn { padding: 5px 12px; font-size: 15px; }
+
+
+
+
+/** 02. Radio and checkbox
+ **************************************************************** **/
+
+/* force inline radio buttons to wrap on smaller */
+@media (max-width: 768px)
+{
+	.radio-inline {
+		display:block;
+		margin-left: 10px;
+	}
+}
+
+
+input[type="radio"], input[type="checkbox"] {
+    display: none;
+}
+input[type="radio"]:checked + label {
+    background-image: url('../global_img/Icon_RadioSelected.png');
+}
+input[type="radio"] + label {
+    background: url('../global_img/Icon_Radio.png') 0 0 no-repeat;
+    padding-left: 32px;
+    min-height: 31px;
+    display: inline-block;
+    padding-top: 2px;
+}
+
+input[type="checkbox"]:checked + label {
+    background-image: url('../global_img/Icon_CheckboxSelected.png');
+}
+input[type="checkbox"] + label {
+    background: url('../global_img/Icon_Checkbox.png') 0 0 no-repeat;
+    padding-left: 32px;
+    min-height: 31px;
+    display: inline-block;
+}
+
+
+
+/**/
+
+input[type="checkbox"].checkbox-sm:checked + label {
+    background-image: url('../global_img/Icon_CheckboxSelected.png');
+	
+}
+input[type="checkbox"].checkbox-sm + label {
+    background: url('../global_img/Icon_Checkbox.png') 0 0 no-repeat;
+	background-size: 16px;
+	background-position: top 3px left;
+    padding-left: 25px;
+    min-height: 31px;
+    display: inline-block;
+	margin-bottom: 5px;
+}
+
+
+
+
+ul.radio,
+ul.checkbox,
+ul.radio-horiztonal,
+ul.radio-horiztonal-lined,
+ul.radio-vertical,
+ul.radio-responsive, 
+ul.radio-rating {
+    list-style: none;
+}
+
+ul.checkbox {
+	margin-left: 0px;
+    padding-left: 10px;
+}
+ul.checkbox > li {
+	margin-bottom: 15px;
+}
+
+
+ul.checkbox-condensed {
+	margin-left: 0px;
+    padding-left: 0px;
+}
+
+
+ul.radio-filters { 
+	padding: 8px 0px 0px 0px;
+}
+
+
+ul.radio-vertical,
+ul.radio-responsive, 
+ul.radio-rating { 
+	padding: 8px 10px 0px 10px;
+}
+
+ul.radio-rating li { 
+	border: solid 1px #000; 
+	margin-bottom: 10px;
+	padding: 8px 10px;
+	min-width: 125px;
+	background-color: #29354a; color:#fff;
+}
+/*
+ul.radio-rating li:nth-of-type(1) { background-color: #29354a; color:#fff; }
+ul.radio-rating li:nth-of-type(2) { background-color: #666; color:#fff; }
+ul.radio-rating li:nth-of-type(3) { background-color: transparent; }
+*/
+
+ul.radio-vertical-lined li { 
+	border-bottom: solid 1px #eaeaea;
+	margin-bottom: 10px;
+	padding: 8px 0px;
+}
+ul.radio-vertical-lined { 
+	border-top: solid 1px #eaeaea;
+}
+
+ul.radio-horizontal {
+    padding-left:10px;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+
+/* Large devices (large desktops, 992px and up) */
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+	ul.radio-responsive, ul.radio-rating, ul.radio-filters { 
+		padding: 8px 0px 0px 0px;
+	}
+	ul.radio-responsive li,
+	ul.radio-rating li {
+		padding-right: 7px;
+		position: relative;
+		display: inline-block;
+		margin-bottom: 0;
+		font-weight: normal;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+}
+@media (min-width: 992px) { 
+}
+@media (min-width: 1200px) { 
+	ul.radio-responsive li {
+		padding-right: 20px;
+	}
+	ul.radio-responsive li:last-of-type { padding-right:0px; }
+}
+
+
+
+
+
+
+
+/** 03. Labels
+ **************************************************************** **/
+label.optional, 
+label.optional-nolbl { font-weight:normal!important; }
+
+label.optional:after { content: ' (optional)'; }
+label.required { color: #4d4d4d; }
+
+html label[disabled] {
+  cursor: default;
+  cursor: not-allowed;
+}
+
+
+.label-set { text-align: left;}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+	.label-set { 
+		text-align: right;
+	}
+
+}
+.label-with-help { padding-bottom:0px;margin-bottom:0px; }
+
+
+
+
+/** 04. Special Field Type Formatting
+ **************************************************************** **/
+.input-currency { max-width: 150px; }
+
+/* Phone layout */
+.new-phone-row {
+	margin-top: 5px;	
+	padding-top: 5px;
+	margin-bottom: 0px!important; /*override .form-group */
+}
+
+.phone-section .form-group {
+	margin-bottom: 0px;
+}
+.phone-section {
+	margin-bottom: 15px; 
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+	.new-phone-row { 
+		border-top: solid 0px #eaeaea;
+	}
+
+}
+
+.drs-mailcheck {  color: #333333; }
+.drs-mailcheck-link {
+    cursor: pointer;    
+    border-bottom: 1px solid #333333;
+}
+    
+.drs-mailcheck-link:hover {
+    color: #000000;
+    border-bottom: 1px solid #cccccc;
+}
+
+.countdown-block {
+	font-size: 14px;
+}
+
+
+
+
+/** 05. Error and Feedback Messages
+ **************************************************************** **/
+.has-error .hide-validation-state .control-label {
+  color: #333;
+}
+.has-error .hide-validation-state .form-control {
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+
+/* Override has-error text color for checkboxes and radios */
+.drs-checkbox-form.has-error label {
+    color: #333;
+}
+
+.drs-radio-form.has-error label {
+    color: #333;
+}
+
+
+.form-error-summary .text-danger,
+.form-error-summary-qualify .text-danger { padding: 10px; }
+.form-error-summary,
+.form-error-summary-qualify { margin-bottom: 20px; }
+
+/* Email input and Error message on forms */
+.drs-help-block {
+    color: #d89c1d;
+    text-align:left;/**/
+    padding-right: 15px;
+}
+.drs-help-block-radio {
+	text-align:left!important;
+}
+.has-error .drs-help-block a { text-decoration:underline; color: #a94442; cursor:pointer; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.highlight:hover { 
+	background: #f2f2f2;
+	background-color: #e8e8e8;
+}
+
+
+
+.help-note { font-weight: normal; font-size: 10px; }
+.or {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#tooltip
+{
+    text-align: center;
+    color: #fff;
+    background: #111;
+    position: absolute;
+    z-index: 10000;
+    padding: 15px;
+}
+ 
+#tooltip:after /* triangle decoration */
+{
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #111;
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: -10px;
+	margin-left: -10px;
+}
+ 
+#tooltip.top:after
+{
+	border-top-color: transparent;
+	border-bottom: 10px solid #111;
+	top: -20px;
+	bottom: auto;
+}
+ 
+#tooltip.left:after
+{
+	left: 10px;
+	margin: 0;
+}
+ 
+#tooltip.right:after
+{
+	right: 10px;
+	left: auto;
+	margin: 0;
+}
+
+
+.drs-show-more {
+    display: block;
+    margin-top: 10px;
+}
+
+.drs-show-less {
+    display: block;
+    margin-bottom: 20px;
+}
+
+
+@media print {
+    .drs-review-desc-summary {
+        display: none !important; 
+    }
+    .drs-review-desc-details {
+        display: block !important; 
+    }
+    .drs-show-more, .drs-show-less {
+        display: none !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+To remove - not used at all 
+.area-selection .well:hover {
+	background-color:#eaeaea;
+	cursor:pointer;
+	text-decoration: none!important;
+}
+.area-selection:hover { text-decoration: none!important; }
+.area-selection-icon { font-size: 2em; }
+.max-hit-message { background-color:#eaeaea; margin-top: -15px; padding-top: 10px; margin-bottom: 10px; }
+
+
+.file-upload-max-size-notice {
+    color:#808080;
+}
+
+
+
+.evidence-summary-accordion:hover, .evidence-summary-accordion:focus {
+    text-decoration: none !important;
+}
+
+.add-evidence-upload .well, .add-evidence-description .well {
+    min-height: 190px;
+}
+
+
+
+
+@media (max-width: 768px) {
+	.add-evidence-upload .well, .add-evidence-description .well {
+        min-height: 130px;
+    }
+}
+
+
+.text-other {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+
+
+
+
+
+.badge-crt-only { background-color:#e3a82b;font-size:9px;cursor:default; }
+
+.dispute-overview-info { background-color:#f1f1f1;padding: 10px; }
+.office-use-only { background-color: #f9f9f9; padding: 8px; border: solid 1px #ddd;margin-bottom: 10px; border-radius: 2px; }
+.office-use-only-desc { font-size:13px;margin-bottom: 3px; }
+.review-attribute-label { margin-top:0px;padding-top:0px; }	
+.business-phone { margin-top: 5px; margin-bottom: 8px; }
+
+.review a.review-email { color:#333; text-decoration:underline; }
+
+
+
+.information-communcation-section { position: relative; }
+
+.choice-group {  padding-bottom: 25px;}
+
+
+@media (min-width: 769px)
+{
+	.choice-group .radio-group-inline {  }
+
+}
+
+
+.review-attribute-label { font-size: 0.9em; font-weight:bold;margin-top:10px; }
+
+h2 .btn-default { background-color:#f7f7f7; }
+section { margin-bottom: 40px; }
+
+
+.additional-details { min-height:0px; padding-top: 10px; }
+
+
+
+*/
+

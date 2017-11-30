@@ -1,0 +1,552 @@
+/** ************************************* **
+
+	TABLE CONTENTS
+	---------------------------
+		01. Layout
+		02. Site specific banner 
+		03. Fonts & headings
+		04. Links
+		05. Common Utilities
+		06. Download, Print, Email Actions
+		07. Contact Form
+		08. Loading panel
+		09. Tooltips
+		10. Error Messaging
+	---------------------------
+
+ ** ************************************* **/
+
+
+@charset "UTF-8";
+
+
+ /** 01. Layout
+ **************************************************************** **/
+#content { padding-top: 23px; }
+
+
+
+
+ /** 02. Site specific banner 
+ **************************************************************** **/
+.navbar, .navbar-inverse, .navbar-fixed-top { 
+	box-shadow: 0 0px 0px 0px #cccccc;
+    -moz-box-shadow: 0 0px 0px 0px #cccccc;
+    -webkit-box-shadow: 0 0px 0px 0px #cccccc;
+	margin-bottom: 0px;
+	background-color: #29354a; 
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #cccccc;
+}
+
+.tribunal-brand-logo { 
+	margin-top:5px;
+}
+.nav { 
+	float:right;
+}
+
+
+.site-sub-brand { 
+	background-color:#000; 
+	margin-top:50px; /*line-height: 40px;*/	
+	color:#fff; 
+	text-align:center; 
+	font-family: 'Century Gothic', 'Arial', sans-serif; 
+	font-size: 16px; 
+	font-weight:bold; 
+	padding: 10px 15px!important;
+    box-shadow: 0 4px 4px -2px #cccccc;
+    -moz-box-shadow: 0 4px 4px -2px #cccccc;
+    -webkit-box-shadow: 0 4px 4px -2px #cccccc;
+}
+.site-sub-brand a { color: #fff; text-decoration: none; }
+
+@media (min-width: 768px) {
+	.site-sub-brand { text-align: left; /*line-height: 50px;*/ font-size: 17px; }
+}
+
+
+
+
+
+
+ /** 03. Fonts & headings
+ **************************************************************** **/
+
+body {
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+}
+
+h1, h2, h3, h4 {
+	font-family: "Century Gothic","Lucida Sans Unicode", "Lucida Grande", sans-serif; 
+}
+
+h1,
+.h1 {
+	font-size: 26px;
+	line-height: 36px;
+}
+h2,
+.h2 {
+  font-size: 17px;
+}
+h3,
+.h3 {
+  font-size: 14px;
+}
+h4,
+.h4 {
+  font-size: 10px;
+}
+
+
+/* Font size >= 16 so that iOS does not zoom on form elements */
+input, select, textarea {
+    font-size: 16px !important;
+}
+
+a.help-link { font-size: 14px!important; text-decoration:none!important; }
+
+
+.form-section h2 {
+	margin: 12px 0px;
+	padding-bottom: 5px;
+	border-bottom: solid 1px #dddddd;
+	font-size: 20px;
+	line-height: 26px;
+}
+
+
+
+
+
+
+
+/** 04. Links
+ **************************************************************** **/
+ a { text-decoration:underline; }
+ a.btn { text-decoration: none; }
+
+.footer a {
+	color: #ffffff;
+}
+
+a.link {
+	text-decoration:underline;	
+}
+
+a.external_link {
+	display:inline;
+	margin: 0px;	
+	padding-right: 20px; 
+	background-image: url("../global_img/icons_external_link.png");
+	background-size: 18px;
+	background-repeat: no-repeat;
+	background-position: right;	
+	text-decoration:underline;
+}
+
+a.page-link:visited {color: #337ab7;}
+a.page-link:hover {color: #4a4b0b;}
+a.page-link {
+    padding-right: 20px;
+    color: #337ab7;
+    background-image: url("../global_img/icons_external_link.png");
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: right;
+    text-decoration: underline;
+}
+
+
+/* Retina-specific handling */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) { 
+   
+    a.external_link { 
+		background-image: url("../global_img/icons_external_link@2x.png");
+	}
+}
+
+
+
+
+/** 05. Common Utilities
+ **************************************************************** **/
+.margin-top5		{ margin-top:5px; }
+.margin-top10		{ margin-top:10px; }
+.margin-top20		{ margin-top:20px; }
+.margin-top30		{ margin-top:30px; }
+.margin-top40		{ margin-top:40px; }
+.margin-top50		{ margin-top:50px; }
+
+.margin-bottom5		{ margin-bottom:5px; }
+.margin-bottom10	{ margin-bottom:10px; }
+.margin-bottom20	{ margin-bottom:20px; }
+.margin-bottom30	{ margin-bottom:30px; }
+.margin-bottom40	{ margin-bottom:40px; }
+.margin-bottom50	{ margin-bottom:50px; }
+
+.nomargin-bottom { margin-bottom: 0px; }
+.nomargin-top { margin-top: 0px; }
+
+.padding-bottom10 { padding-bottom: 10px; }
+.padding-10 { padding: 10px; }
+.padding-top5 { padding-top: 5px; }
+
+.table-msg { display: table; } 
+.table-msg-icon, 
+.table-msg-text { display: table-cell; vertical-align:top; padding: 5px 5px 5px 0px; } 
+.table-msg-icon { font-size:20px; }
+
+.display-block { display:block; }
+.inline-block { display:inline-block; }
+.no-break { page-break-inside: avoid; }
+
+
+
+
+
+
+/** 06. Download, Print, Email Actions
+ **************************************************************** **/
+
+.download-print-email-section {
+    display: block;
+    padding-top: 4px;
+    max-width: 500px;
+}
+
+
+.download-print-email-section .row {
+    min-height: 40px;
+}
+
+/**/
+.download-print-email-section .drs-email-form .email-label {
+	padding-bottom: 10px;
+}
+
+.drs-email-input {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .download-print-email-section .email-input-section {
+        padding-right: 0;
+        padding-left: 0;
+    }
+   
+    
+    .download-print-email-section .drs-email-form .email-label {
+      /* width: 19%;*/
+		padding-bottom: 0px;
+    }
+	
+}
+
+
+.page-actions { }
+.page-actions .icon-download { top: 8px;left: 5px;	}
+.page-actions .icon-email { top: 8px;left: 5px;	 }
+.page-actions .icon-print { top: 8px;left: 5px;	 }
+
+
+.icon-print {
+	background: url("../global_img/Icon_Print.png") center left no-repeat;
+	background-size: contain;
+	height: 12px;
+	width: 23px;
+	position: absolute;
+}
+
+
+.icon-email {
+	background: url("../global_img/Icon_Email.png") bottom left no-repeat;
+	background-size: contain;
+	height: 12px;
+	width: 23px;
+	position: absolute;
+}
+
+.page-action {	
+	cursor: pointer;
+	font-weight: normal;
+	color: #808080;
+	text-align: left;
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+    top: 5px;
+}
+
+.page-action-label {
+	vertical-align:bottom;
+	padding-right: 10px;
+}
+
+
+@media (min-width: 768px) {
+
+}
+
+
+
+
+
+/** 07. Contact Form
+ **************************************************************** **/
+
+.es_contact_form_response { display:none; }
+.reply_yn { width: 75px; }
+.option_first { color: #666666!important; }
+
+.es_contact_form_error { 
+	display:none; 
+	color: #d89c1d;
+	padding: 10px 0px 0px 28px;
+	margin-bottom: 10px;
+	min-height: 24px;
+	background: url('../_images/es_warning_24.png') no-repeat center left;
+}
+.reply-requested { 
+	max-width: 300px; 
+	display:none;
+}
+
+
+
+
+
+
+/** 08. Loading panel
+ **************************************************************** **/
+.loading-container-in-div,
+.loading-container {
+	width: 100%;
+	height: 100%;	
+    top: 0;
+	left: 0px;
+	z-index: 9999;
+	background-color: rgba(255,255,255,0.75);		
+}
+.loading-container {
+	position: fixed; /* Full Page */
+}
+.loading-container-in-div {
+	position: absolute; /* For Div */
+	margin-left: -0.5px;
+}
+
+.loading-parent,
+.loading-parent-in-div { 
+	z-index: 99999; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 	
+}
+.loading-icon {	
+	position: fixed;
+	width: 150px;
+	height: 130px;
+	top: 35%;
+    right: 0;
+    left: 0;
+	background-image: url("../../global_img/es_loader_blue_lrg.gif");
+	background-position: center center;
+	background-repeat:no-repeat;
+	margin: 0 auto;
+	z-index: 9999999;
+}
+.loading-icon-in-div {
+    position: relative;
+    top: 0;
+    height: 100%;
+}
+
+
+
+
+/** 09. Tooltips
+ **************************************************************** **/
+.tooltip {
+    font-size: 14px;
+}
+.tooltip.in {
+    opacity: 1;
+}
+.tooltip .tooltip-arrow {
+    border-top-color: #29354a !important;
+}
+.tooltip-inner {
+    padding: 10px;
+    border-radius: 0;
+    background-color: #29354a !important;
+}
+
+
+
+/** 10. Error messages
+ **************************************************************** **/
+
+.page-error-block-container {
+    padding: 15px 10px 10px 20px;
+    margin-bottom: 20px;
+    background-color: #f2dede;
+    color: #a94442;
+}
+.page-error-block {
+    padding-left: 35px;
+    /*font-size: 16px;
+    font-weight: bold;*/
+    background: url('../global_img/Icon_ErrorLarge.png') 0 0 no-repeat;
+    background-color: #f2dede;
+}
+.error-block {
+    margin: 5px 0 0 0;
+    padding-left: 24px;
+    font-size: 15px;
+    line-height: 20px;
+    background: url('../global_img/Icon_ErrorSmall.png') 0 0 no-repeat;
+    color: #a94442;
+}
+.warning-block {
+    margin: 5px 0 0 0;
+    padding-left: 50px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    font-size: 15px;
+    line-height: 20px;
+    background: url('../global_img/Icon_Warning.png') 5px 5px no-repeat;
+    color: #666;
+    background-color: #fff6e5;
+    max-width: 650px;
+}
+
+
+
+
+
+
+
+
+
+
+/* Watermark for printing */
+.watermark-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1000;
+    overflow-y: hidden;
+}
+.ff-only-watermark-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1000;
+    overflow-y: hidden;
+    display: none;
+}
+.watermark {
+    position: relative;
+}
+
+
+.remove-scroll {
+	overflow:hidden !important;
+}
+
+
+
+
+
+
+
+
+.legal-links {
+	padding-top: 10px;
+	text-align: right;
+	padding-right: 30px;
+}
+
+/* Tablet view */
+@media (min-width: 992px) {
+	.legal-links {
+	padding-right: 0px;
+	text-align: center;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** 26. Modal
+ **************************************************************** **/
+.modal-content {
+	overflow:hidden;
+
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+			border-radius: 6px;
+}
+.modal-header {
+	background-color:#687180;
+}
+.modal-header  button,
+h4.modal-title {
+	color:#fff !important;
+	opacity:1;
+	
+	font-size: 1.4em;
+	font-weight: 400;
+	letter-spacing: normal;
+	line-height: 27px;
+	margin: 0 0 0px 0;
+	padding: 0px;
+}
+.modal-header  button {
+	font-size:30px;
+}
+.modal.fade .modal-dialog {
+	z-index:9999;
+}
+.modal-backdrop {
+  background-color: #fff;
+}
+
+
+
+
+
+@media print {
+    /* Bootstrap table override */
+    .table td, .table th {
+        background: transparent !important;
+    }
+
+}
